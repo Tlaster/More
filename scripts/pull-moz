@@ -1,0 +1,11 @@
+mkdir ./build
+wget -O ./build/moz.hg "https://hg.cdn.mozilla.net/$(curl "https://hg.cdn.mozilla.net/bundles.json" | jq --raw-output '."mozilla-central"."zstd-max".path')"
+mkdir ./mozilla-central
+hg init ./mozilla-central
+cd ./mozilla-central
+hg unbundle ../build/moz.hg
+echo '[paths]
+default = https://hg.mozilla.org/mozilla-central/' >./.hg/hgrc
+hg pull
+hg update
+rm ../build/moz.hg

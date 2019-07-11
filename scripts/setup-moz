@@ -1,0 +1,7 @@
+cd mozilla-central
+chmod +x ./gradlew
+echo 'ac_add_options --enable-application=mobile/android
+ac_add_options --enable-artifact-builds
+mk_add_options MOZ_OBJDIR=./objdir-frontend' >mozconfig
+./mach bootstrap --application-choice mobile_android_artifact_mode --no-interactive
+./mach build && ./mach package && ./gradlew geckoview:assembleWithGeckoBinariesRelease geckoview:publishWithGeckoBinariesReleasePublicationToMavenRepository
